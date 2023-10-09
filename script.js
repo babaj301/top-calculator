@@ -23,8 +23,8 @@ const divide = function (a, b) {
   a / b;
 };
 
-let firstNum = ``;
-let secNum = ``;
+let firstNum = 0;
+let secNum = 0;
 let operator = ``;
 
 let displayNum = ``;
@@ -41,6 +41,15 @@ numbers.forEach((e) => {
   e.addEventListener("click", () => {
     displayValue(e.innerHTML);
     console.log(displayNum);
+    if (firstNum < 1) {
+      firstNum = Number(e.innerHTML);
+      console.log(firstNum);
+    } else if (firstNum > 0) {
+      secNum = Number(e.innerHTML);
+      console.log(`sec : ${secNum}`);
+      firstNum = 0;
+    }
+
     displayScreen += displayNum;
     display.innerHTML = displayScreen;
   });
