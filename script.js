@@ -25,7 +25,12 @@ const divide = function (a, b) {
 };
 
 function operate(num1, num2, opp) {
-  const realNum2 = num2.split("").shift();
+  console.log(num2);
+  const arrString = Array.from(num2);
+  arrString.shift();
+  console.log(arrString);
+  const realNum2 = arrString.join("");
+  console.log(realNum2);
   const num1Digit = Number(num1);
   const num2Digit = Number(realNum2);
   if (opp === "+") {
@@ -35,13 +40,17 @@ function operate(num1, num2, opp) {
   } else if (opp === "*") {
     return multiply(num1Digit, num2Digit);
   } else if (opp === "/") {
-    return divide(num1Digit, num2Digit);
+    if (num2Digit === 0) {
+      return "Dont do that please";
+    } else {
+      return divide(num1Digit, num2Digit);
+    }
   }
 }
 
-let firstNum = localStorage.getItem("firstNum");
-let secNum = localStorage.getItem("secNum");
-let operator = localStorage.getItem("operator");
+let firstNum = "";
+let secNum = "";
+let operator = "";
 
 let displayNum = ``;
 let displayScreen = ``;
@@ -64,9 +73,11 @@ numbers.forEach((e) => {
     display.innerHTML = displayScreen;
     displayVal = display.innerHTML;
     if (!display.classList.contains("operated")) {
-      localStorage.setItem("firstNum", displayVal);
+      // localStorage.setItem("firstNum", displayVal);
+      firstNum = displayVal;
     } else if (display.classList.contains("operated")) {
-      localStorage.setItem("secNum", displayVal);
+      // localStorage.setItem("secNum", displayVal);
+      secNum = displayVal;
     }
   });
 });
@@ -76,7 +87,8 @@ operators.forEach((e) => {
     operator = ``;
 
     if (operator === ``) {
-      localStorage.setItem("operator", e.innerHTML);
+      // localStorage.setItem("operator", e.innerHTML);
+      operator = e.innerHTML;
       displayOperator(e.innerHTML);
       console.log(operator);
       displayScreen = operator;
@@ -91,7 +103,26 @@ operators.forEach((e) => {
 });
 
 equal.addEventListener("click", () => {
-  console.log(operate("55", "66", "*"));
+  display.innerHTML = operate(firstNum, secNum, operator);
+  firstNum = display.innerHTML;
+});
+
+// clearButton.addEventListener("click", () => {
+//   firstNum = "";
+//   secNum = "";
+//   operator = "";
+//   display.innerHTML = "0";
+//   displayVal = "";
+//   displayScreen = "";
+// });
+
+allClear.addEventListener("click", () => {
+  firstNum = "";
+  secNum = "";
+  operator = "";
+  display.innerHTML = "0";
+  displayVal = "";
+  displayScreen = "";
 });
 
 console.log(displayVal);
